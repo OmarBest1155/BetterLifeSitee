@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BetterLife - Login</title>
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="form-box">
+            <div class="forms-container">
+                <div id="login-form" class="form active">
+                    <h2 class="title">Login</h2>
+                    <div id="login-notification" class="notification"></div>
+                    <form class="input-group" id="login-form-element">
+                        <input type="text" class="input-field" id="login-email" placeholder="Email" required>
+                        <input type="password" class="input-field" id="login-password" placeholder="Password" required>
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember-me" class="remember-checkbox">
+                            <label for="remember-me">Remember me</label>
+                        </div>
+                        <button type="submit" class="submit-btn" id="login-btn">Login</button>
+                        <p class="switch-prompt">Don't have an account? <span class="switch-link" id="to-signup-link">Sign Up</span></p>
+                    </form>
+                </div>
+                
+                <div id="signup-form" class="form">
+                    <h2 class="title">Sign Up</h2>
+                    <div id="signup-notification" class="notification"></div>
+                    <form class="input-group" id="signup-form-element">
+                        <input type="text" class="input-field" id="signup-name" placeholder="Full Name" required>
+                        <input type="email" class="input-field" id="signup-email" placeholder="Email" required>
+                        <input type="password" class="input-field" id="signup-password" placeholder="Password" required>
+                        <input type="password" class="input-field" id="signup-confirm-password" placeholder="Confirm Password" required>
+                        <button type="submit" class="submit-btn" id="signup-btn">Sign Up</button>
+                        <p class="switch-prompt">Already have an account? <span class="switch-link" id="to-login-link">Login</span></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="logout-modal">
+        <div class="logout-container">
+            <h3>Logout Confirmation</h3>
+            <p>Are you sure you want to logout?</p>
+            <div class="logout-actions">
+                <button class="logout-cancel">Cancel</button>
+                <button class="logout-confirm">Yes, Logout</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html>

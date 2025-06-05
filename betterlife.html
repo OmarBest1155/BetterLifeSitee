@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BetterLife - Get Started</title>
+    <link rel="stylesheet" href="css/betterlife.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+</head>
+<body>
+    <div id="top-notification" class="top-notification"></div>
+    <nav class="navbar">
+        <button class="menu-btn" id="menu-button">
+            <img src="images/menu_button.png" alt="Menu">
+        </button>
+        <button class="reload-btn" id="reload-button">
+            <img src="images/reloadimg.png" alt="Reload">
+        </button>
+        <h1 class="welcome-text" id="welcome-message">Welcome</h1>
+        <button class="account-btn" id="account-button">
+            <img src="images/profilepc.png" alt="Account" id="account-button-image">
+        </button>
+    </nav>
+    <div id="notification" class="notification"></div>
+    <div class="disabled-overlay" id="disabled-overlay"></div>
+    <div class="sidebar" id="sidebar">
+        <button class="sidebar-btn home-btn" data-section="home">
+            <span class="btn-emoji">🏠</span>
+            <span class="btn-text">Home</span>
+        </button>
+        <button class="sidebar-btn workouts-btn" data-section="workouts">
+            <span class="btn-emoji">💪</span>
+            <span class="btn-text">Workouts</span>
+        </button>
+        <button class="sidebar-btn schedule-btn" data-section="schedule">
+            <span class="btn-emoji">📅</span>
+            <span class="btn-text">Workout Schedule</span>
+        </button>
+        <button class="sidebar-btn diet-btn" data-section="diet">
+            <span class="btn-emoji">🍎</span>
+            <span class="btn-text">Diet</span>
+        </button>
+        <button class="sidebar-btn skincare-btn" data-section="skincare">
+            <span class="btn-emoji">✨</span>
+            <span class="btn-text">Skin Care</span>
+        </button>
+        <!-- Add this new button -->
+        <button class="sidebar-btn" data-section="measurements">
+            <span class="btn-emoji">📏</span>
+            <span class="btn-text">Measurements</span>
+        </button>
+        <button class="sidebar-btn" data-section="pictures">
+            <span class="btn-emoji">📸</span>
+            <span class="btn-text">Body Pictures</span>
+        </button>
+    </div>
+    <div class="right-sidebar" id="right-sidebar">
+        <button class="sidebar-btn" data-section="profile">
+            <span class="btn-emoji">👤</span>
+            <span class="btn-text">Profile</span>
+        </button>
+        <button class="sidebar-btn" data-section="data">
+            <span class="btn-emoji">📊</span>
+            <span class="btn-text">Data</span>
+        </button>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Add this new selection area -->
+    <div class="selection-area hide-selection" id="selection-area">
+        <div class="section-content home-section active" data-section="home">
+            <h2 class="status-title">Status</h2>
+            <div class="info-cards-container">
+                <div class="info-card physique-card" data-type="physique">
+                    <div class="card-icon">📊</div>
+                    <h3>Physique Info</h3>
+                    <div class="card-content">
+                        <p class="info-item height">Height: <span>--</span></p>
+                        <p class="info-item weight">Weight: <span>--</span></p>
+                        <p class="info-item metabolic">BMR: <span>--</span></p>
+                    </div>
+                </div>
+                <div class="info-card personal-card" data-type="personal">
+                    <div class="card-icon">👤</div>
+                    <h3>Personal Info</h3>
+                    <div class="card-content">
+                        <p class="info-item firstname">First Name: <span>--</span></p>
+                        <p class="info-item secondname">Second Name: <span>--</span></p>
+                        <p class="info-item lastname">Last Name: <span>--</span></p>
+                    </div>
+                </div>
+                <div class="info-card birth-card" data-type="birth">
+                    <div class="card-icon">🎂</div>
+                    <h3>Birth Info</h3>
+                    <div class="card-content">
+                        <p class="info-item year">Year: <span>--</span></p>
+                        <p class="info-item month">Month: <span>--</span></p>
+                        <p class="info-item day">Day: <span>--</span></p>
+                    </div>
+                </div>
+                <div class="info-card avatar-card" data-type="avatar">
+                    <div class="card-icon">🖼️</div>
+                    <h3>Avatar Info</h3>
+                    <div class="card-content">
+                        <div class="avatar-preview">
+                            <img src="images/profilepc.png" alt="Profile Picture">
+                        </div>
+                        <p class="info-item nickname">Nickname: <span>--</span></p>
+                        <p class="info-item gender">Gender: <span>--</span></p>
+                    </div>
+                </div>
+                <div class="info-card account-info-card" data-type="account">
+                    <div class="card-icon">🔑</div>
+                    <h3>Account Info</h3>
+                    <div class="card-content">
+                        <p class="info-item email">Email: <span>--</span></p>
+                        <p class="info-item password">
+                            Password: 
+                            <span class="password-field">
+                                <span class="password-text">--</span>
+                                <button class="toggle-password">
+                                    <img src="images/eye.png" alt="Toggle password visibility">
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="info-card nutrition-card">
+                    <div class="card-icon">🥗</div>
+                    <h3>Needed Nutrition</h3>
+                    <div class="card-content">
+                        <p class="info-item">Calories: <span>--</span></p>
+                        <p class="info-item">Protein: <span>--</span></p>
+                        <p class="info-item">Carbs: <span>--</span></p>
+                        <p class="info-item">Fat: <span>--</span></p>
+                        <div class="tracking-condition">
+                            <p class="condition-title">Tracking Condition:</p>
+                            <div class="condition-stats">
+                                <span class="condition-item good">Good: <span>0</span></span>
+                                <span class="condition-item medium">Medium: <span>0</span></span>
+                                <span class="condition-item bad">Bad: <span>0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-content workouts-section" data-section="workouts">
+            <div class="workouts-header">
+                <h2 class="status-title">Workouts</h2>
+                <button class="add-workout-btn" id="add-workout-btn" title="Add Workout"></button>
+            </div>
+            <div class="workouts-divider"></div>
+            <div class="workouts-container">
+                <!-- Content will be added here later -->
+            </div>
+        </div>
+        <div class="section-content schedule-section" data-section="schedule">
+            <div class="workouts-header">
+                <div class="schedule-title-container">
+                    <h2 class="status-title">Schedule</h2>
+                    <button class="schedule-type-toggle">Normal</button>
+                </div>
+                <button id="add-schedule-btn">
+                    <div class="plus-icon"></div>
+                </button>
+            </div>
+            <div class="workouts-divider"></div>
+            <div class="normal-schedule-container">
+                <div class="weeks-container">
+                    <!-- Weeks will be dynamically added here -->
+                </div>
+                <div class="schedule-divider"></div>
+                <div class="days-container">
+                    <!-- Days will be dynamically added here -->
+                </div>
+            </div>
+            <div class="fixed-schedule-container" style="display: none;">
+                <!-- Empty for now, will be populated later -->
+            </div>
+        </div>
+        <div class="section-content diet-section" data-section="diet">
+            <div class="workouts-header">
+                <h2 class="status-title">Diet Tracking</h2>
+            </div>
+            <div class="workouts-divider"></div>
+            <div class="diet-container" id="diet-days-container">
+                <!-- Days will be added here dynamically -->
+            </div>
+        </div>
+        <div class="section-content skincare-section" data-section="skincare">
+            <div class="skincare-header">
+                <h2 class="status-title">Skin Care Routine</h2>
+            </div>
+            <div class="workouts-divider"></div>
+            <div class="skincare-container">
+                <div class="day-entry">
+                    <div class="day-main-content">
+                        <div class="day-date">Sunday</div>
+                        <button class="skincare-add-btn" title="Add Skincare Routine">
+                            <span class="plus-icon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="day-entry">
+                    <div class="day-main-content">
+                        <div class="day-date">Monday</div>
+                        <button class="skincare-add-btn" title="Add Skincare Routine">
+                            <span class="plus-icon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="day-entry">
+                    <div class="day-main-content">
+                        <div class="day-date">Tuesday</div>
+                        <button class="skincare-add-btn" title="Add Skincare Routine">
+                            <span class="plus-icon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="day-entry">
+                    <div class="day-main-content">
+                        <div class="day-date">Wednesday</div>
+                        <button class="skincare-add-btn" title="Add Skincare Routine">
+                            <span class="plus-icon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="day-entry">
+                    <div class="day-main-content">
+                        <div class="day-date">Thursday</div>
+                        <button class="skincare-add-btn" title="Add Skincare Routine">
+                            <span class="plus-icon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="day-entry">
+                    <div class="day-main-content">
+                        <div class="day-date">Friday</div>
+                        <button class="skincare-add-btn" title="Add Skincare Routine">
+                            <span class="plus-icon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="day-entry">
+                    <div class="day-main-content">
+                        <div class="day-date">Saturday</div>
+                        <button class="skincare-add-btn" title="Add Skincare Routine">
+                            <span class="plus-icon"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add this new section content area -->
+        <div class="section-content" data-section="measurements">
+            <div class="workouts-header">
+                <h2 class="status-title">Body Measurements</h2>
+            </div>
+            <div class="workouts-divider"></div>
+            <div class="measurements-cards">
+                <div class="measurement-card" data-type="before">
+                    <h3 class="card-title">Before</h3>
+                    <div class="card-content">
+                        <div class="measurement-item" data-measurement="neck">
+                            <span class="label">Neck</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="chest">
+                            <span class="label">Chest</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="leftBicep">
+                            <span class="label">Left Bicep</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightBicep">
+                            <span class="label">Right Bicep</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="leftForearm">
+                            <span class="label">Left Forearm</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightForearm">
+                            <span class="label">Right Forearm</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="leftShoulder">
+                            <span class="label">Left Shoulder</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightShoulder">
+                            <span class="label">Right Shoulder</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="leftLeg">
+                            <span class="label">Left Leg</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightLeg">
+                            <span class="label">Right Leg</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="weight">
+                            <span class="label">Weight</span>
+                            <span class="value">0 kg</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="height">
+                            <span class="label">Height</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="measurement-card" data-type="after">
+                    <h3 class="card-title">After</h3>
+                    <div class="card-content">
+                        <div class="measurement-item" data-measurement="neck">
+                            <span class="label">Neck</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="chest">
+                            <span class="label">Chest</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="leftBicep">
+                            <span class="label">Left Bicep</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightBicep">
+                            <span class="label">Right Bicep</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="leftForearm">
+                            <span class="label">Left Forearm</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightForearm">
+                            <span class="label">Right Forearm</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="leftShoulder">
+                            <span class="label">Left Shoulder</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightShoulder">
+                            <span class="label">Right Shoulder</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="leftLeg">
+                            <span class="label">Left Leg</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightLeg">
+                            <span class="label">Right Leg</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="weight">
+                            <span class="label">Weight</span>
+                            <span class="value">0 kg</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="height">
+                            <span class="label">Height</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="measurement-card" data-type="difference">
+                    <h3 class="card-title">Difference</h3>
+                    <div class="card-content">
+                        <div class="measurement-item" data-measurement="neck">
+                            <span class="label">Neck</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="chest">
+                            <span class="label">Chest</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class "measurement-item" data-measurement="leftBicep">
+                            <span class="label">Left Bicep</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightBicep">
+                            <span class="label">Right Bicep</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="leftForearm">
+                            <span class="label">Left Forearm</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightForearm">
+                            <span class="label">Right Forearm</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="leftShoulder">
+                            <span class="label">Left Shoulder</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightShoulder">
+                            <span class="label">Right Shoulder</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="leftLeg">
+                            <span class="label">Left Leg</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="rightLeg">
+                            <span class="label">Right Leg</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="weight">
+                            <span class="label">Weight</span>
+                            <span class="value">0 kg</span>
+                        </div>
+                        <div class="measurement-item" data-measurement="height">
+                            <span class="label">Height</span>
+                            <span class="value">0 cm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-content" data-section="profile">
+            <h2 class="status-title">Profile</h2>
+            <div class="schedule-divider"></div>
+            <div class="info-cards-container">
+                <div class="info-card">
+                    <div class="card-icon">👤</div>
+                    <h3>Personal Info</h3>
+                    <div class="card-content">
+                        <p class="info-item">
+                            First Name: <span id="firstName">--</span>
+                            <button class="edit-btn" data-field="firstName"><img src="images/pencil.png" alt="Edit"></button>
+                        </p>
+                        <p class="info-item">
+                            Second Name: <span id="secondName">--</span>
+                            <button class="edit-btn" data-field="secondName"><img src="images/pencil.png" alt="Edit"></button>
+                        </p>
+                        <p class="info-item">
+                            Last Name: <span id="lastName">--</span>
+                            <button class="edit-btn" data-field="lastName"><img src="images/pencil.png" alt="Edit"></button>
+                        </p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">📏</div>
+                    <h3>Physical Stats</h3>
+                    <div class="card-content">
+                        <p class="info-item">
+                            Height: <span id="height">--</span>
+                            <button class="edit-btn" data-field="height"><img src="images/pencil.png" alt="Edit"></button>
+                        </p>
+                        <p class="info-item">
+                            Weight: <span id="weight">--</span>
+                            <button class="edit-btn" data-field="weight"><img src="images/pencil.png" alt="Edit"></button>
+                        </p>
+                        <p class="info-item">
+                            BMR: <span id="bmr">--</span>
+                            <button class="edit-btn" data-field="bmr"><img src="images/pencil.png" alt="Edit"></button>
+                        </p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">🎯</div>
+                    <h3>Goals</h3>
+                    <div class="card-content">
+                        <p class="info-item">
+                            Target Weight: <span id="targetWeight">--</span>
+                            <button class="edit-btn" data-field="targetWeight"><img src="images/pencil.png" alt="Edit"></button>
+                        </p>
+                        <p class="info-item">
+                            Weekly Goal: <span id="weeklyGoal">--</span>
+                            <button class="edit-btn" data-field="weeklyGoal"><img src="images/pencil.png" alt="Edit"></button>
+                        </p>
+                        <p class="info-item">
+                            Target Date: <span id="targetDate">--</span>
+                            <button class="edit-btn" data-field="targetDate"><img src="images/pencil.png" alt="Edit"></button>
+                        </p>
+                    </div>
+                </div>
+                <!-- Keep other cards as placeholders -->
+                <div class="info-card">
+                    <div class="card-icon">🏆</div>
+                    <h3>Progress</h3>
+                    <div class="card-content">
+                        <p class="info-item">--<span>--</span></p>
+                        <p class="info-item">--<span>--</span></p>
+                        <p class="info-item">--<span>--</span></p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">📈</div>
+                    <h3>Activity</h3>
+                    <div class="card-content">
+                        <p class="info-item">--<span>--</span></p>
+                        <p class="info-item">--<span>--</span></p>
+                        <p class="info-item">--<span>--</span></p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Statistics</h3>
+                    <div class="card-content">
+                        <p class="info-item">--<span>--</span></p>
+                        <p class="info-item">--<span>--</span></p>
+                        <p class="info-item">--<span>--</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add edit modal -->
+        <div class="edit-profile-modal">
+            <div class="edit-profile-container">
+                <h3 class="edit-title">Edit Profile</h3>
+                <div class="edit-content">
+                    <input type="text" id="edit-field" class="edit-input">
+                </div>
+                <div class="edit-actions">
+                    <button class="edit-cancel">Cancel</button>
+                    <button class="edit-save">Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="section-content" data-section="pictures">
+            <div class="workouts-header">
+                <h1 class="status-title">Body Pictures</h1>
+                <button id="add-picture-btn" title="Add new picture">
+                    <span class="plus-icon"></span>
+                </button>
+            </div>
+            <div class="workouts-divider"></div>
+            <div class="pictures-container">
+                <div class="pictures-grid"></div>
+            </div>
+        </div>
+        <div class="section-content" data-section="data">
+            <h2 class="status-title">Data Management</h2>
+            <div class="schedule-divider"></div>
+            <div class="data-box-container">
+                <div class="data-box">
+                    <button id="export-data" class="data-button">Export Data</button>
+                    <button id="import-data" class="data-button">Import Data</button>
+                </div>
+            </div>
+            <div class="data-grid">
+                <!-- Data cards will be dynamically populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Remove the bottom bar element -->
+
+    <div class="questionnaire-overlay" id="questionnaire-overlay">
+        <div class="questionnaire-container">
+            <h2>Just A Few More Questions To Go!</h2>
+            <p class="subtitle">Almost There...</p>
+            <div id="questionnaire-notification" class="notification"></div>
+            <form id="questionnaire-form" class="questionnaire-form">
+                <!-- Questions will be added here dynamically -->
+            </form>
+            <div class="physique-section">
+                <h3>Physique Information</h3>
+                <form id="physique-form">
+                    <div class="form-group">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" id="height" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="metabolic-rate">Metabolic Rate (kcal/day)</label>
+                        <input type="number" id="metabolic-rate" required>
+                    </div>
+                    <button type="submit" class="next-btn">Next →</button>
+                </form>
+            </div>
+            
+            <div class="name-section" style="display: none;">
+                <h3>Personal Information</h3>
+                <form id="name-form">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="second-name">Second Name</label>
+                        <input type="text" id="second-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" required>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="back-btn">← Back</button>
+                        <button type="submit" class="next-btn">Next →</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="birth-section" style="display: none;">
+                <h3>Birth Information</h3>
+                <form id="birth-form">
+                    <div class="form-group">
+                        <label for="birth-year">Birth Year</label>
+                        <input type="number" id="birth-year" min="1920" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birth-month">Birth Month</label>
+                        <select id="birth-month" class="select-field" required>
+                            <option value="" disabled selected>Select Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birth-day">Birth Day</label>
+                        <input type="number" id="birth-day" min="1" max="31" required>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="back-btn">← Back</button>
+                        <button type="submit" class="next-btn">Next →</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="avatar-section" style="display: none;">
+                <h3>Profile Setup</h3>
+                <form id="avatar-form">
+                    <div class="form-group profile-picture-group">
+                        <label for="profile-upload" class="profile-upload-label">
+                            <div class="profile-picture-container">
+                                <img src="images/profilepc.png" alt="Profile Picture" id="profile-preview">
+                                <div class="profile-overlay">
+                                    <span>Click to change</span>
+                                </div>
+                            </div>
+                        </label>
+                        <input type="file" id="profile-upload" accept="image/*" hidden>
+                    </div>
+                    <div class="form-group">
+                        <label for="nickname">Nickname</label>
+                        <input type="text" id="nickname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" class="select-field" required>
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="unspecified">Prefer not to specify</option>
+                        </select>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="back-btn">← Back</button>
+                        <button type="submit" class="finish-btn">Finish</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this new workout selection popup -->
+    <div class="workout-selection-overlay" id="workout-selection-overlay">
+        <div class="workout-selection-container">
+            <h2>Select A Workout To Add</h2>
+            <div class="workout-search-container">
+                <input type="text" id="workout-search" placeholder="Search workouts..." class="workout-search-input">
+            </div>
+            <div class="workouts-list" id="workouts-list">
+                <div class="workout-category">
+                    <h3 class="category-title brown">Chest Exercises</h3>
+                    <div class="workout-items">
+                        <!-- Chest exercises will be added dynamically -->
+                    </div>
+                </div>
+                <div class="workout-category">
+                    <h3 class="category-title orange">Arm Exercises</h3>
+                    <div class="workout-items">
+                        <!-- Arm exercises will be added dynamically -->
+                    </div>
+                </div>
+                <!-- Add more categories following the same pattern -->
+            </div>
+            <div class="custom-workout-prompt">
+                <p>Can't find your workout? <span class="add-custom-link">Add a custom one</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add custom workout modal -->
+    <div class="custom-workout-modal" id="custom-workout-modal">
+        <div class="custom-workout-container">
+            <h2>Create Custom Workout</h2>
+            <form id="custom-workout-form">
+                <div class="form-group">
+                    <label for="custom-workout-name">Workout Name</label>
+                    <input type="text" id="custom-workout-name" required placeholder="Enter workout name">
+                </div>
+                <div class="form-group">
+                    <label for="custom-workout-type">Workout Type</label>
+                    <select id="custom-workout-type" class="select-field" required>
+                        <option value="" disabled selected>Select workout type</option>
+                        <option value="Chest Exercises">Chest Exercises</option>
+                        <option value="Arm Exercises">Arm Exercises</option>
+                        <option value="Shoulder Exercises">Shoulder Exercises</option>
+                        <option value="Back Exercises">Back Exercises</option>
+                        <option value="Abs Workouts">Abs Workouts</option>
+                        <option value="Sit-Up Variations">Sit-Up Variations</option>
+                        <option value="Push-Up Variations">Push-Up Variations</option>
+                        <option value="Lunge Variations">Lunge Variations</option>
+                        <option value="Full Body Workouts">Full Body Workouts</option>
+                        <option value="Leg Workouts">Leg Workouts</option>
+                        <option value="Cardio & Athletic">Cardio & Athletic</option>
+                        <option value="Recovery Time">Recovery Time</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="cancel-btn">Cancel</button>
+                    <button type="submit" class="create-btn">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add schedule selection overlay -->
+    <div class="schedule-selection-overlay" id="schedule-selection-overlay">
+        <div class="schedule-selection-container">
+            <h2>Select Schedule Period</h2>
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button class="calendar-nav prev-month">
+                        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                    </button>
+                    <h3 class="current-month">January 2024</h3>
+                    <button class="calendar-nav next-month">
+                        <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+                    </button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-weekdays"></div>
+                    <div class="calendar-days"></div>
+                </div>
+                <div class="date-range-info"></div>
+                <div class="date-range-error"></div>
+                <div class="calendar-actions">
+                    <button class="calendar-cancel">Cancel</button>
+                    <button class="calendar-confirm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Skincare Selection Modal -->
+    <div class="skincare-selection-overlay" id="skincare-selection-overlay">
+        <div class="skincare-selection-container">
+            <h2>Select Skincare Type</h2>
+            <div class="skincare-list">
+                <div class="skincare-item" data-type="Quick Shower">Quick Shower</div>
+                <div class="skincare-item" data-type="Long Shower">Long Shower</div>
+                <div class="skincare-item" data-type="Face Wash">Face Wash</div>
+                <div class="skincare-item" data-type="Face Cream">Face Cream</div>
+            </div>
+            <div class="skincare-time-input" style="display: none;">
+                <input type="time" id="skincare-time" required>
+            </div>
+            <div class="skincare-actions">
+                <button class="skincare-cancel">Cancel</button>
+                <button class="skincare-confirm" style="display: none;">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/betterlife.js"></script>
+    <!-- Add style to hide questionnaire initially -->
+    <style>
+        .questionnaire-overlay, .disabled-overlay {
+            visibility: hidden;
+            opacity: 0;
+        }
+        .show-questionnaire .questionnaire-overlay,
+        .show-questionnaire .disabled-overlay {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+    <script>
+        // Immediately check questionnaire status
+        const currentUser = JSON.parse(localStorage.getItem('firebase:authUser:AIzaSyDzR2iJ_Nyd5PL3bq2jVMHcPBO9hSM1qVY:[DEFAULT]'));
+        if (currentUser && localStorage.getItem(`questionnaire_completed_${currentUser.uid}`) !== 'true') {
+            document.body.classList.add('show-questionnaire');
+        }
+    </script>
+    <!-- Place this just before </body> -->
+    <div class="measurement-edit-modal" id="measurement-edit-modal">
+        <div class="measurement-edit-container">
+            <h3 class="modal-title"></h3>
+            <div class="modal-content">
+                <input type="number" class="measurement-input" step="0.1" min="0">
+                <div class="modal-actions">
+                    <button class="modal-cancel">Cancel</button>
+                    <button class="modal-save">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add this before closing body tag -->
+    <div class="picture-info-modal">
+        <div class="picture-info-container">
+            <h3>Picture Information</h3>
+            <form id="picture-info-form">
+                <div class="form-group">
+                    <label>Comparison Type</label>
+                    <div class="comparison-options">
+                        <label class="radio-label">
+                            <input type="radio" name="comparison-type" value="before" required>
+                            Before
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="comparison-type" value="after" required>
+                            After
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="body-picture-type">Body Picture Type</label>
+                    <input type="text" id="body-picture-type" required placeholder="e.g., Front View, Side View">
+                </div>
+                <div class="form-group">
+                    <label for="picture-age">Age (12-25)</label>
+                    <input type="number" id="picture-age" min="12" max="25" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn">Cancel</button>
+                    <button type="submit" class="save-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Add this after your other modals -->
+    <div class="logout-modal">
+        <div class="logout-container">
+            <h3>Confirm Logout</h3>
+            <p>Are you sure you want to logout?</p>
+            <div class="logout-actions">
+                <button class="logout-cancel">Cancel</button>
+                <button class="logout-confirm">Yes, Logout</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

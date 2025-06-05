@@ -1,0 +1,381 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #ffffff;
+}
+
+.auth-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.form-box {
+    width: 540px;  /* 400px * 1.35 */
+    height: 675px; /* 500px * 1.35 */
+    position: relative;
+    background: #fff;
+    padding: 27px;  /* 20px * 1.35 */
+    border-radius: 34px; /* 25px * 1.35 */
+    overflow: hidden;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.1);
+    animation: popUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.forms-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+}
+
+.form {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: auto; /* Remove fixed height */
+    min-height: 0; /* Allow content to determine height */
+    transform: translateY(-50%) translateX(100%);
+    opacity: 0;
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+    padding: 20px 0;
+}
+
+.form.active {
+    transform: translateY(-50%) translateX(0);
+    opacity: 1;
+}
+
+.title {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 38px;
+    margin: 0 0 30px 0;  /* Adjusted margin */
+}
+
+.input-group {
+    position: relative;
+    width: 405px;
+    margin: 0 auto;
+    padding: 0 27px;  /* Removed top/bottom padding */
+}
+
+.switch-prompt {
+    text-align: center;
+    color: #666;
+    margin-top: 10px; /* Changed from 20px to bring text closer to button */
+}
+
+.switch-link {
+    color: #3498db;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.switch-link:hover {
+    color: #2ecc71;
+}
+
+/* Remove unused styles */
+.button-box, .toggle-btn, #btn {
+    display: none;
+}
+
+.input-field {
+    width: 100%;
+    padding: 16px 7px;  /* 12px * 1.35, 5px * 1.35 */
+    margin: 11px 0;  /* 8px * 1.35 */
+    border: none;
+    border-bottom: 2px solid #eee;
+    outline: none;
+    background: transparent;
+    font-size: 22px;  /* 16px * 1.35 */
+    transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+    border-bottom-color: #2ecc71;
+}
+
+.input-field.error {
+    border-bottom-color: #ff4444;
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    box-shadow: 0 2px 10px rgba(255, 68, 68, 0.2);
+}
+
+@keyframes shake {
+    10%, 90% { transform: translateX(-1px); }
+    20%, 80% { transform: translateX(2px); }
+    30%, 50%, 70% { transform: translateX(-4px); }
+    40%, 60% { transform: translateX(4px); }
+}
+
+.submit-btn {
+    width: 85%;
+    padding: 16px 40px;  /* 12px * 1.35, 30px * 1.35 */
+    cursor: pointer;
+    display: block;
+    margin: 40px auto 20px auto; /* Added bottom margin to maintain spacing */
+    background: linear-gradient(120deg, #3498db, #2ecc71);
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 22px;  /* 16px * 1.35 */
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(46, 204, 113, 0.4);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popUp {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.toggle-btn.active {
+    color: #fff;
+}
+
+.notification {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification.success {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #27ae60;
+    border: 1px solid #2ecc71;
+}
+
+.notification.error {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #c0392b;
+    border: 1px solid #e74c3c;
+}
+
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Add before the media queries */
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    user-select: none;
+}
+
+.remember-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.remember-checkbox:checked {
+    background: linear-gradient(120deg, #3498db, #2ecc71);
+    border-color: transparent;
+}
+
+.remember-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.remember-me label {
+    color: #666;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    .auth-container {
+        align-items: center;
+        padding: 20px;
+        height: 100vh; /* Fallback */
+        height: 100dvh; /* Modern viewport height */
+    }
+
+    .form-box {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        min-height: 450px;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .forms-container {
+        height: auto;
+        min-height: 400px;
+    }
+
+    .form {
+        position: absolute;
+        height: auto;
+        padding: 0;
+    }
+
+    .input-group {
+        width: 90%;
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    .title {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .input-field {
+        font-size: 16px;
+        padding: 12px 5px;
+        margin: 8px 0;
+    }
+
+    .submit-btn {
+        font-size: 18px;
+        padding: 12px 30px;
+        width: 100%;
+        margin: 20px auto;
+    }
+
+    .notification {
+        margin: 10px;
+    }
+
+    .remember-me {
+        margin: 10px 0;
+    }
+
+    .remember-checkbox {
+        width: 18px;
+        height: 18px;
+    }
+
+    .remember-me label {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    html {
+        font-size: 12px;
+    }
+
+    .form-box {
+        padding: 15px;
+        min-height: 400px;
+    }
+
+    .forms-container {
+        min-height: 350px;
+    }
+
+    .title {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .input-field {
+        font-size: 14px;
+        padding: 10px 5px;
+    }
+
+    .submit-btn {
+        font-size: 16px;
+        padding: 10px 20px;
+        margin: 15px auto;
+    }
+
+    .switch-prompt {
+        font-size: 14px;
+    }
+
+    .remember-me label {
+        font-size: 13px;
+    }
+
+    .remember-checkbox {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Fix for very small devices */
+@media screen and (max-height: 600px) {
+    .form-box {
+        margin: 10px;
+        min-height: 350px;
+    }
+
+    .title {
+        margin-bottom: 10px;
+    }
+
+    .input-field {
+        margin: 5px 0;
+    }
+}

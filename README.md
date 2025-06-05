@@ -1,2 +1,3 @@
-# BetterLifeSitee
-A Website Runner for BetterLife
+This Is Open Source
+
+Do Anything You Want With The Code
