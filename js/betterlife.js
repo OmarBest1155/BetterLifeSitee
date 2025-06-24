@@ -27,6 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.reload();
     });
 
+    // Initialize theme from localStorage
+    const theme = localStorage.getItem('theme') || 'light';
+    if (theme === 'dark') {
+        document.body.classList.add('dark-mode');
+    }
+
     const userData = {
         isQuestionnaireDone: false
     };
@@ -191,6 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
             updateMeasurementsList();
         } else if (sectionId === 'pictures') {
             updatePicturesGrid();
+        } else if (sectionId === 'settings') {
+            // Initialize settings section if needed
+            initializeSettings();
         }
     }
 
@@ -1787,6 +1796,11 @@ document.addEventListener('DOMContentLoaded', () => {
             updateDietSection();
         } else if (sectionId === 'measurements') {
             updateMeasurementsList();
+        } else if (sectionId === 'pictures') {
+            updatePicturesGrid();
+        } else if (sectionId === 'settings') {
+            // Initialize settings section if needed
+            initializeSettings();
         }
     }
 
@@ -1841,6 +1855,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const formattedStats = 
                 workoutStats.type === 'distance' ? `${workoutStats.value}km` : 
                 workoutStats.type === 'time' ? `${workoutStats.value}m` :
+                (workoutStats.type === 'reps' && workoutStats.value < 1) ? 
+                    `Till Failure + x${Math.round(workoutStats.value * 10)}` :
                 `x${workoutStats.value}`;
             
             statsDisplay = workoutStats.sets > 1 ? `${formattedStats} ${workoutStats.sets}s` : formattedStats;
@@ -1849,7 +1865,7 @@ document.addEventListener('DOMContentLoaded', () => {
         workoutTag.innerHTML = `
             <div class="day-workout-content">
                 ${workout.name}
-                ${statsDisplay ? `<span class="workout-stats">${statsDisplay}</span>` : ''}
+                ${statsDisplay ? `<span class="workout-stats" style="display: inline-block;">${statsDisplay}</span>` : ''}
             </div>
             <div class="workout-actions">
                 <button class="add-time-btn" title="Set time">
@@ -2043,15 +2059,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 workoutContent.appendChild(statsSpan);
             }
             
-            let displayText = stats.type === 'distance' ? `${stats.value}km` : 
-                             stats.type === 'time' ? `${stats.value}m` :
+            let statValue = stats.type === 'distance' ? `${stats.value}km` : 
+                             stats.type === 'time' ? 
+                                 (stats.value < 1 ? `${Math.round(stats.value * 100)}sec` :
+                                 Number.isInteger(stats.value) ? `${stats.value}m` :
+                                 `${Math.floor(stats.value)}m ${Math.round((stats.value % 1) * 100)}sec`) :
+                             (stats.type === 'reps' && stats.value < 1) ? 
+                                 `Till Failure + x${Math.round(stats.value * 10)}` :
                              `x${stats.value}`;
+            let displayText = `<span class="stat-value-highlight">${statValue}</span>`;
                              
             if (stats.sets > 1) {
-                displayText += ` ${stats.sets}s`;
+                displayText += ` <span class="sets-count">${stats.sets}s</span>`;
             }
             
-            statsSpan.textContent = displayText;
+            statsSpan.innerHTML = displayText;
 
             // Close modal
             modal.classList.remove('active');
@@ -2160,6 +2182,205 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    function initializeSettings() {
+        const settingsContainer = document.querySelector('.settings-container');
+        if (!settingsContainer) return;
+
+        // Clear existing content
+        settingsContainer.innerHTML = `
+            <div class="settings-group">
+                <h3 class="settings-group-title">Appearance</h3>
+                <div class="settings-divider"></div>
+                <div class="settings-entries">
+                    <div class="settings-entry">
+                        <div class="settings-entry-header">
+                            <span class="settings-entry-title">Theme</span>
+                            <div class="theme-switcher">
+                                <input type="radio" id="lightTheme" name="theme" value="light">
+                                <input type="radio" id="darkTheme" name="theme" value="dark">
+                                <label for="lightTheme" class="theme-option">
+                                    <span class="theme-icon">☀️</span>
+                                    <span class="theme-text">Light</span>
+                                </label>
+                                <label for="darkTheme" class="theme-option">
+                                    <span class="theme-icon">🌙</span>
+                                    <span class="theme-text">Dark</span>
+                                </label>
+                                <div class="theme-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Initialize theme switcher
+        const lightTheme = document.getElementById('lightTheme');
+        const darkTheme = document.getElementById('darkTheme');
+        
+        if (lightTheme && darkTheme) {
+            // Check saved preference
+            const theme = localStorage.getItem('theme') || 'light';
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                darkTheme.checked = true;
+            } else {
+                lightTheme.checked = true;
+            }
+
+            // Add event listeners
+            lightTheme.addEventListener('change', () => {
+                if (lightTheme.checked) {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            darkTheme.addEventListener('change', () => {
+                if (darkTheme.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+    }
+
+    // Create update screen
+    const updateScreen = document.createElement('div');
+    updateScreen.id = 'update-screen';
+
+    // Create gradient background
+    const gradientBg = document.createElement('div');
+    gradientBg.className = 'gradient-bg';
+    updateScreen.appendChild(gradientBg);
+
+    // Create content container
+    const content = document.createElement('div');
+    content.className = 'update-content';
+    updateScreen.appendChild(content);
+
+    // Create particles container
+    const particles = document.createElement('div');
+    particles.className = 'particles';
+    updateScreen.appendChild(particles);
+
+    // Add particles
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.animationDelay = `${Math.random() * 6}s`;
+        particles.appendChild(particle);
+    }
+
+    // Create bubbles
+    for (let i = 0; i < 15; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.style.setProperty('--left', `${Math.random() * 100}%`);
+        bubble.style.setProperty('--duration', `${4 + Math.random() * 4}s`);
+        bubble.style.width = `${20 + Math.random() * 30}px`;
+        bubble.style.height = bubble.style.width;
+        bubble.style.animationDelay = `${Math.random() * 2}s`;
+        updateScreen.appendChild(bubble);
+    }
+
+    // Create header section
+    const header = document.createElement('div');
+    header.className = 'update-header';
+
+    // Create title
+    const title = document.createElement('div');
+    title.className = 'update-title';
+    title.textContent = 'New Update';
+    header.appendChild(title);
+
+    // Create version
+    const version = document.createElement('div');
+    version.className = 'update-version';
+    version.textContent = 'Update 3';
+    header.appendChild(version);
+
+    content.appendChild(header);
+
+    // Create features container
+    const featuresContainer = document.createElement('div');
+    featuresContainer.className = 'features-container';
+
+    // Create features title
+    const featuresTitle = document.createElement('div');
+    featuresTitle.className = 'features-title';
+    featuresTitle.textContent = 'What\'s New';
+    featuresContainer.appendChild(featuresTitle);
+
+    // Create features list
+    const featuresList = document.createElement('div');
+    featuresList.className = 'features-list';
+
+    // Define features
+    const features = [
+        {
+            icon: '⚙️',
+            title: 'Settings Section',
+            description: 'New comprehensive settings panel for customizing your experience'
+        },
+        {
+            icon: '🎨',
+            title: 'Themes & Dark Mode',
+            description: 'Customizable themes and a sleek new dark mode for comfortable viewing'
+        },
+        {
+            icon: '📱',
+            title: 'Better Formatting',
+            description: 'Improved visual layout and formatting across all sections'
+        },
+        {
+            icon: '💪',
+            title: 'Enhanced Workouts',
+            description: 'Better visuals for fixed and scheduled workouts with improved tracking'
+        }
+    ];
+
+    // Add features
+    features.forEach(feature => {
+        const featureItem = document.createElement('div');
+        featureItem.className = 'feature-item';
+        featureItem.innerHTML = `
+            <div class="feature-icon">${feature.icon}</div>
+            <div class="feature-title">${feature.title}</div>
+            <div class="feature-description">${feature.description}</div>
+        `;
+        featuresList.appendChild(featureItem);
+    });
+
+    featuresContainer.appendChild(featuresList);
+
+    // Add bug fixes note
+    const bugFixes = document.createElement('div');
+    bugFixes.className = 'bug-fixes';
+    bugFixes.textContent = '284 bugs fixed for improved stability and performance';
+    featuresContainer.appendChild(bugFixes);
+
+    content.appendChild(featuresContainer);
+
+    // Create close button
+    const closeButton = document.createElement('button');
+    closeButton.className = 'close-button';
+    closeButton.textContent = 'Okey..';
+    closeButton.addEventListener('click', () => {
+        updateScreen.style.opacity = '0';
+        updateScreen.style.transform = 'scale(0.95)';
+        updateScreen.style.transition = 'all 0.5s ease-in-out';
+        setTimeout(() => {
+            updateScreen.remove();
+        }, 500);
+    });
+    content.appendChild(closeButton);
+
+    // Add to body
+    document.body.appendChild(updateScreen);
 });
 
 // Add skincare button handlers
@@ -2514,6 +2735,11 @@ function switchSection(sectionId) {
         updateDietSection();
     } else if (sectionId === 'measurements') {
         updateMeasurementsList();
+    } else if (sectionId === 'pictures') {
+        updatePicturesGrid();
+    } else if (sectionId === 'settings') {
+        // Initialize settings section if needed
+        initializeSettings();
     }
 }
 
@@ -2568,9 +2794,14 @@ function createWorkoutTag(workout, workoutsContainer, dayId) {
         const formattedStats = 
             workoutStats.type === 'distance' ? `${workoutStats.value}km` : 
             workoutStats.type === 'time' ? `${workoutStats.value}m` :
+            (workoutStats.type === 'reps' && workoutStats.value < 1) ? 
+                `Till Failure + x${Math.round(workoutStats.value * 10)}` :
             `x${workoutStats.value}`;
         
-        statsDisplay = workoutStats.sets > 1 ? `${formattedStats} ${workoutStats.sets}s` : formattedStats;
+        statsDisplay = `<span class="stat-value-highlight">${formattedStats}</span>`;
+        if (workoutStats.sets > 1) {
+            statsDisplay += ` <span class="sets-count">${workoutStats.sets}s</span>`;
+        }
     }
     
     workoutTag.innerHTML = `
@@ -2770,15 +3001,21 @@ function showStatsModal(workout, dayId, workoutTag) {
             workoutContent.appendChild(statsSpan);
         }
         
-        let displayText = stats.type === 'distance' ? `${stats.value}km` : 
-                         stats.type === 'time' ? `${stats.value}m` :
-                         `x${stats.value}`;
+        let statValue = stats.type === 'distance' ? `${stats.value}km` : 
+                             stats.type === 'time' ? 
+                                 (stats.value < 1 ? `${Math.round(stats.value * 100)}sec` :
+                                 Number.isInteger(stats.value) ? `${stats.value}m` :
+                                 `${Math.floor(stats.value)}m ${Math.round((stats.value % 1) * 100)}sec`) :
+                             (stats.type === 'reps' && stats.value < 1) ? 
+                                 `Till Failure + x${Math.round(stats.value * 10)}` :
+                             `x${stats.value}`;
+        let displayText = `<span class="stat-value-highlight">${statValue}</span>`;
                          
         if (stats.sets > 1) {
             displayText += ` ${stats.sets}s`;
         }
         
-        statsSpan.textContent = displayText;
+        statsSpan.innerHTML = displayText;
 
         // Close modal
         modal.classList.remove('active');
@@ -4562,3 +4799,141 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ...existing code...
+
+// Add after the document.addEventListener('DOMContentLoaded', function() {
+
+// Random symbols animation
+const symbols = ['!@#$%', '&*()_', '+=-~`', '}{":?', '><,./'];
+const randomSymbolsElements = document.querySelectorAll('.random-symbols, .random-title-symbols');
+
+function updateRandomSymbols() {
+    const randomIndex = Math.floor(Math.random() * symbols.length);
+    randomSymbolsElements.forEach(element => {
+        if (element) {
+            element.textContent = symbols[randomIndex];
+        }
+    });
+}
+
+// Start the animation
+setInterval(updateRandomSymbols, 25);  // Changed from 100ms to 25ms
+
+// Add this to the existing section content area
+const randomSection = document.createElement('div');
+randomSection.className = 'section-content';
+randomSection.setAttribute('data-section', 'random');
+randomSection.innerHTML = `
+    <div class="random-centered-container">
+        <h2 class="random-title-symbols">?????</h2>
+    </div>
+`;
+document.querySelector('.selection-area').appendChild(randomSection);
+
+// ... existing code ...
+
+// Handle black overlay for random section
+const blackOverlay = document.querySelector('.black-overlay');
+
+// Handle random button click
+document.querySelector('.random-symbols-btn').addEventListener('click', function() {
+    // Show the black overlay
+    blackOverlay.classList.add('active');
+    
+    // Ensure the random section is active
+    const sections = document.querySelectorAll('.section-content');
+    sections.forEach(section => section.classList.remove('active'));
+    document.querySelector('.section-content[data-section="random"]').classList.add('active');
+});
+
+// ... existing code ...
+
+function createStars() {
+    const blackOverlay = document.querySelector('.black-overlay');
+    const numberOfStars = 50;
+    const existingStars = blackOverlay.querySelectorAll('.star');
+    
+    // Remove existing stars
+    existingStars.forEach(star => star.remove());
+
+    // Create new stars
+    for (let i = 0; i < numberOfStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        
+        // Random animation delay and duration
+        const delay = Math.random() * 2;
+        const duration = 3 + Math.random() * 2;
+        star.style.animation = `starTrail ${duration}s ${delay}s infinite`;
+        
+        blackOverlay.appendChild(star);
+    }
+}
+
+// Modify the existing random section click handler
+document.querySelector('.random-symbols-btn').addEventListener('click', function() {
+    const blackOverlay = document.querySelector('.black-overlay');
+    blackOverlay.classList.add('active');
+    
+    // Create stars immediately
+    createStars();
+    
+    // Recreate stars periodically for continuous effect
+    const starInterval = setInterval(createStars, 5000);
+    
+    // Create scary text with delay
+    setTimeout(() => {
+        const scaryText = document.createElement('div');
+        scaryText.className = 'scary-text';
+        scaryText.textContent = 'Huh......';
+        scaryText.style.position = 'fixed';
+        scaryText.style.top = '50%';
+        scaryText.style.left = '50%';
+        scaryText.style.transform = 'translate(-50%, -50%) translateZ(0)';
+        scaryText.style.zIndex = '9999';
+        document.body.appendChild(scaryText);
+    }, 1500);
+    
+    // Clean up when clicking anywhere
+    const cleanup = () => {
+        blackOverlay.classList.remove('active');
+        clearInterval(starInterval);
+        const scaryText = document.querySelector('.scary-text');
+        if (scaryText) {
+            scaryText.remove();
+        }
+        document.removeEventListener('click', cleanup);
+    };
+    
+    // Add cleanup listener with delay to prevent immediate triggering
+    setTimeout(() => {
+        document.addEventListener('click', cleanup);
+    }, 2000);
+});
+
+// ... existing code ...
+
+// Dark Mode Functionality
+const darkModeToggle = document.getElementById('darkModeToggle');
+const body = document.body;
+
+// Check for saved dark mode preference
+const darkMode = localStorage.getItem('darkMode');
+if (darkMode === 'enabled') {
+    body.classList.add('dark-mode');
+    darkModeToggle.checked = true;
+}
+
+// Toggle dark mode
+darkModeToggle.addEventListener('change', () => {
+    if (darkModeToggle.checked) {
+        body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'enabled');
+    } else {
+        body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'disabled');
+    }
+});

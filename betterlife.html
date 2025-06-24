@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BetterLife - Get Started</title>
     <link rel="stylesheet" href="css/betterlife.css">
+    <link rel="stylesheet" href="css/update-screen.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <link rel="icon" type="image/png" href="images/leaf_image.png">
@@ -46,7 +47,6 @@
             <span class="btn-emoji">✨</span>
             <span class="btn-text">Skin Care</span>
         </button>
-        <!-- Add this new button -->
         <button class="sidebar-btn" data-section="measurements">
             <span class="btn-emoji">📏</span>
             <span class="btn-text">Measurements</span>
@@ -54,6 +54,10 @@
         <button class="sidebar-btn" data-section="pictures">
             <span class="btn-emoji">📸</span>
             <span class="btn-text">Body Pictures</span>
+        </button>
+    <!-- Random symbols button at the end -->
+    <button class="sidebar-btn random-symbols-btn" data-section="random">
+        <span class="btn-emoji random-symbols">?????</span>
         </button>
     </div>
     <div class="right-sidebar" id="right-sidebar">
@@ -64,6 +68,10 @@
         <button class="sidebar-btn" data-section="data">
             <span class="btn-emoji">📊</span>
             <span class="btn-text">Data</span>
+        </button>
+        <button class="sidebar-btn" data-section="settings">
+            <span class="btn-emoji">⚙️</span>
+            <span class="btn-text">Settings</span>
         </button>
     </div>
     <div class="overlay" id="overlay"></div>
@@ -547,6 +555,20 @@
             </div>
             <div class="data-grid">
                 <!-- Data cards will be dynamically populated here -->
+            </div>
+        </div>
+        <div class="section-content" data-section="random">
+            <div class="random-centered-container">
+                <h2 class="random-title-symbols">?????</h2>
+            </div>
+        </div>
+        <div class="section-content settings-section" data-section="settings">
+            <div class="settings-header">
+                <h2 class="status-title">Settings</h2>
+            </div>
+            <div class="workouts-divider"></div>
+            <div class="settings-container">
+                <!-- Settings content will be added here dynamically -->
             </div>
         </div>
     </div>
